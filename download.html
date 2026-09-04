@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -34,13 +34,25 @@
   </div>
 
   <section>
+    <h2>Verify the download (SHA-256)</h2>
+    <p>Before you run the installer, check that the file matches this hash. That confirms it is the build we published for v0.1.0, not a swapped copy.</p>
+    <pre><code>6e867b18c43f663b6dfd17841dddc8e3d63f3296171fa28c99458e7b2106ce9a</code></pre>
+    <p>On Windows, in PowerShell or Command Prompt:</p>
+    <pre><code>certutil -hashfile biofmt-windows-setup.exe SHA256</code></pre>
+    <p class="text-muted">The printed hash should match the value above (case does not matter). File size is about 66 MB.</p>
+  </section>
+
+  <section>
     <h2>Windows</h2>
     <ol>
       <li>
-        <p>Download <code>biofmt-windows-setup.exe</code> from the button above. Only use the copy from this site.</p>
+        <p>Download <code>biofmt-windows-setup.exe</code> from the button above. Only use the copy from this site or the matching GitHub Release.</p>
       </li>
       <li>
-        <p>Run the installer. If SmartScreen warns that the app is unrecognized, that is expected until we ship a signed build — choose <strong>More info</strong>, then <strong>Run anyway</strong>, and only if you came from this page.</p>
+        <p>Optionally verify the SHA-256 hash (section above).</p>
+      </li>
+      <li>
+        <p>Run the installer. If SmartScreen warns that the app is unrecognized, that is expected until we ship a signed build — choose <strong>More info</strong>, then <strong>Run anyway</strong>, and only if you came from this page and the hash matches.</p>
       </li>
       <li>
         <p>Launch biofmt from the Start menu. The installer also places <code>Biofmt.exe</code> in your install folder.</p>
@@ -67,7 +79,7 @@
   </section>
 
   <div class="note">
-    <p>Files never leave your machine. Do not run an installer emailed to you or linked from a random post — only the button on this page. Source is not published; commercial and core-facility licensing is on the <a href="license.html">license</a> page.</p>
+    <p>Files never leave your machine — local only, no upload, no telemetry. Do not run an installer emailed to you or linked from a random post — only the button on this page (or the matching Release). Source is not published; academic/eval use is free. Core-facility and commercial site licenses: email <a href="mailto:mankataliachinmaye@gmail.com">mankataliachinmaye@gmail.com</a>.</p>
   </div>
 
 </main>

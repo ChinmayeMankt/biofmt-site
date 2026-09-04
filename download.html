@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download — biofmt</title>
+<meta name="description" content="Download the biofmt installer for Windows. Runs locally — your files never leave the machine.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">bio<span>fmt</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="download.html">Download</a>
+      <a href="docs.html">Docs</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="license.html">License</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <h1>Download &amp; install</h1>
+  <p class="text-muted">Get the installer for your machine. biofmt runs entirely locally — sample sheets, FASTQ, and GTF/GFF3 files never leave the computer you install it on. There is no public source repository.</p>
+
+  <div class="hero-actions">
+    <a href="downloads/biofmt-windows-setup.exe" class="btn btn-primary">Download for Windows</a>
+    <span class="btn btn-secondary" aria-disabled="true" title="macOS build coming soon" style="opacity:0.55;cursor:not-allowed;">macOS — coming soon</span>
+  </div>
+
+  <section>
+    <h2>Windows</h2>
+    <ol>
+      <li>
+        <p>Download <code>biofmt-windows-setup.exe</code> from the button above. Only use the copy from this site.</p>
+      </li>
+      <li>
+        <p>Run the installer. If SmartScreen warns that the app is unrecognized, that is expected until we ship a signed build — choose <strong>More info</strong>, then <strong>Run anyway</strong>, and only if you came from this page.</p>
+      </li>
+      <li>
+        <p>Launch biofmt from the Start menu. The installer also places <code>Biofmt.exe</code> in your install folder.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>macOS</h2>
+    <p class="text-muted">The macOS installer is not ready yet. Windows is the first supported download.</p>
+  </section>
+
+  <section>
+    <h2>After install</h2>
+    <p>The packaged app includes the local GUI. For CLI use from a terminal after install, run the installed <code>Biofmt.exe</code> with the same subcommands documented in the <a href="docs.html">docs</a> (profiles: <code>generic</code>, <code>cellranger</code>, <code>nfcore-rnaseq</code>).</p>
+  </section>
+
+  <section>
+    <h2>Requirements</h2>
+    <ul>
+      <li>Windows 10 or newer (64-bit)</li>
+      <li>No separate Python or git install required</li>
+    </ul>
+  </section>
+
+  <div class="note">
+    <p>Files never leave your machine. Do not run an installer emailed to you or linked from a random post — only the button on this page. Source is not published; commercial and core-facility licensing is on the <a href="license.html">license</a> page.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>&copy; 2026 biofmt</span>
+    <a href="license.html">License</a>
+    <a href="mailto:mankataliachinmaye@gmail.com">mankataliachinmaye@gmail.com</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

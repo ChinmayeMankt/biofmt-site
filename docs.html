@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docs — biofmt</title>
+<meta name="description" content="biofmt command reference: inspect, validate, genes, fix, gui. Includes example finding IDs.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">bio<span>fmt</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="download.html">Download</a>
+      <a href="docs.html">Docs</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="license.html">License</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <h1>Command reference</h1>
+  <p class="text-muted">biofmt is a CLI (with an optional local GUI) that checks pipeline inputs. It does not modify your source files unless you explicitly run <code>fix</code> with <code>--write</code>, and even then it writes to a separate output directory.</p>
+
+  <section>
+    <h2><code>biofmt inspect</code></h2>
+    <p>Look at a file or folder and report what biofmt thinks it is, without running full validation.</p>
+    <pre><code>python -m biofmt inspect PATH</code></pre>
+  </section>
+
+  <section>
+    <h2><code>biofmt validate</code></h2>
+    <p>Run the full set of checks against a folder of pipeline inputs, optionally cross-checked against a sample sheet.</p>
+    <pre><code>python -m biofmt validate PATH [--sheet PATH] [--profile generic|cellranger|nfcore-rnaseq]</code></pre>
+    <ul>
+      <li><code>--sheet PATH</code> — a sample sheet (CSV or Excel-style) to cross-check sample IDs, paths, and index barcodes against.</li>
+      <li><code>--profile</code> — which pipeline's expectations to check against. Defaults to <code>generic</code> if omitted.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><code>biofmt genes</code></h2>
+    <p>Check a gene list file for Excel mutilation, withdrawn symbols, ambiguous aliases, and mixed identifier types.</p>
+    <pre><code>python -m biofmt genes FILE</code></pre>
+  </section>
+
+  <section>
+    <h2><code>biofmt fix</code></h2>
+    <p>Write corrected copies of inputs where a fix is unambiguous. Original files are never overwritten.</p>
+    <pre><code>python -m biofmt fix ... --write DIR</code></pre>
+  </section>
+
+  <section>
+    <h2><code>biofmt gui</code></h2>
+    <p>Open a local Streamlit window for running the same checks without a terminal. Files stay on the machine running the GUI.</p>
+    <pre><code>python -m biofmt gui</code></pre>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>Finding IDs</h2>
+    <p>Every issue biofmt reports has a stable finding ID, grouped by the kind of file it applies to. A few examples from each group:</p>
+
+    <h3>Sample sheet (<code>sheet.*</code>)</h3>
+    <table>
+      <tbody>
+        <tr><td><code>sheet.required_columns</code></td><td>A required column is missing from the sheet.</td></tr>
+        <tr><td><code>sheet.duplicate_sample_id</code></td><td>The same sample ID appears more than once.</td></tr>
+        <tr><td><code>sheet.illegal_sample_id</code></td><td>A sample ID contains characters that will break downstream tools.</td></tr>
+        <tr><td><code>sheet.reserved_name</code></td><td>A sample ID collides with a reserved name.</td></tr>
+        <tr><td><code>sheet.path_missing</code></td><td>A referenced FASTQ path doesn't exist.</td></tr>
+        <tr><td><code>sheet.index_length</code></td><td>An index/barcode is an unexpected length.</td></tr>
+        <tr><td><code>sheet.index_hamming</code></td><td>Two indexes are too close in Hamming distance to demultiplex reliably.</td></tr>
+        <tr><td><code>sheet.unnamed_columns</code></td><td>An unnamed column, usually from an Excel export artifact.</td></tr>
+        <tr><td><code>sheet.constant_design_column</code></td><td>A design column has the same value in every row.</td></tr>
+        <tr><td><code>sheet.excel_csv</code></td><td>The file looks like an Excel export with formatting quirks intact.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>FASTQ (<code>fastq.*</code>, <code>detect.*</code>)</h3>
+    <table>
+      <tbody>
+        <tr><td><code>fastq.id_mismatch</code></td><td>The @ header and + line disagree.</td></tr>
+        <tr><td><code>fastq.length_mismatch</code></td><td>Sequence and quality string lengths don't match.</td></tr>
+        <tr><td><code>fastq.truncated</code></td><td>A record ends mid-way through.</td></tr>
+        <tr><td><code>fastq.empty</code></td><td>The file has no records.</td></tr>
+        <tr><td><code>fastq.phred_mixed</code></td><td>Quality scores suggest more than one Phred encoding in the same file.</td></tr>
+        <tr><td><code>fastq.pair_count_mismatch</code></td><td>R1 and R2 have different read counts.</td></tr>
+        <tr><td><code>fastq.interleaved</code></td><td>The file looks interleaved rather than single-end.</td></tr>
+        <tr><td><code>fastq.cellranger_name</code></td><td>Filename doesn't match the expected Cell Ranger naming pattern.</td></tr>
+        <tr><td><code>detect.suffix_content_mismatch</code></td><td>File extension doesn't match its actual content.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>GTF / GFF3 (<code>gtf.*</code>, <code>gff.*</code>)</h3>
+    <table>
+      <tbody>
+        <tr><td><code>gtf.missing_transcript</code></td><td>Gene rows exist without corresponding transcript rows (required by Cell Ranger).</td></tr>
+        <tr><td><code>gtf.missing_attributes</code></td><td>A row is missing <code>gene_id</code> or <code>transcript_id</code>.</td></tr>
+        <tr><td><code>gtf.incompatible_profile</code></td><td>The file's structure doesn't match the selected pipeline profile.</td></tr>
+        <tr><td><code>gff.dangling_parent</code></td><td>A <code>Parent</code> attribute references an ID that doesn't exist.</td></tr>
+        <tr><td><code>gff.coord_invalid</code></td><td>Start/end coordinates are malformed or out of order.</td></tr>
+        <tr><td><code>gff.duplicate_id</code></td><td>The same feature ID appears more than once.</td></tr>
+        <tr><td><code>gff.strand_conflict</code></td><td>A feature and its parent disagree on strand.</td></tr>
+        <tr><td><code>gff.gene_name_collision</code></td><td>Two different gene IDs share the same gene name.</td></tr>
+        <tr><td><code>gff.source_dialect</code></td><td>The file's source field suggests a dialect that may affect parsing.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Cross-file (<code>sample_id.*</code>, <code>contig.*</code>, <code>ref_build.*</code>, <code>missing.*</code>)</h3>
+    <table>
+      <tbody>
+        <tr><td><code>sample_id.mismatch</code></td><td>Sample sheet IDs don't line up with FASTQ-derived names.</td></tr>
+        <tr><td><code>contig.prefix_mismatch</code></td><td>Some files use a <code>chr</code> prefix and others don't.</td></tr>
+        <tr><td><code>contig.set_mismatch</code></td><td>Files reference different contig sets.</td></tr>
+        <tr><td><code>ref_build.suspect</code></td><td>Contigs suggest a reference build different from the one specified.</td></tr>
+        <tr><td><code>missing.files</code></td><td>A file referenced elsewhere could not be found.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Gene lists (<code>gene.*</code>)</h3>
+    <table>
+      <tbody>
+        <tr><td><code>gene.excel</code></td><td>A gene symbol was silently converted to a date by Excel (e.g. <code>2-Sep</code> for <code>SEPTIN2</code>).</td></tr>
+        <tr><td><code>gene.ambiguous</code></td><td>A symbol maps to more than one gene alias.</td></tr>
+        <tr><td><code>gene.withdrawn</code></td><td>A symbol has been withdrawn or superseded.</td></tr>
+        <tr><td><code>gene.id_mixed</code></td><td>The column mixes Ensembl IDs, symbols, and/or dates.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="note">
+    <p>This is not the full list of finding IDs — it's a representative sample from each category. Run <code>biofmt validate</code> or <code>biofmt genes</code> against your own files to see everything that applies.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>&copy; 2026 biofmt</span>
+    <a href="license.html">License</a>
+    <a href="mailto:mankataliachinmaye@gmail.com">mankataliachinmaye@gmail.com</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

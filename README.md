@@ -1,2 +1,3 @@
 # biofmt-site
-Public marketing site for biofmt (static). Tool source stays private.
+
+Static marketing site for biofmt. The Windows installer is published separately as a Release asset.

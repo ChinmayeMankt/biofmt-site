@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>biofmt — pre-flight validator for genomics pipeline inputs</title>
+<meta name="description" content="biofmt checks sample sheets, FASTQ, and GTF/GFF3 files for the errors that break Cell Ranger, nf-core, and GATK-style runs — before you queue the job. Runs locally.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">bio<span>fmt</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="download.html">Download</a>
+      <a href="docs.html">Docs</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="license.html">License</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Catch the sample-sheet, FASTQ, GTF, and Excel-gene errors that kill your pipeline run — before you queue the job.</h1>
+    <p class="lede">biofmt is a local pre-flight validator for genomics pipeline inputs. It checks the files on your computer and tells you what's wrong, in plain terms, before Cell Ranger, nf-core, or a GATK-style workflow does it for you at hour six.</p>
+    <div class="hero-actions">
+      <a href="download.html" class="btn btn-primary">Install biofmt</a>
+      <a href="docs.html" class="btn btn-secondary">Read the docs</a>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section>
+    <h2>The problem</h2>
+    <p>A sample sheet has an unnamed Excel column. A gene list has "SEPT2" silently turned into a date. A FASTQ pair is missing a mate. A GTF is missing transcript rows that Cell Ranger expects. None of this shows up until the pipeline is already running — or has already failed, an hour or a day in.</p>
+    <p>biofmt runs before that. It reads your inputs, checks them against known failure patterns, and reports specific, addressable findings — not a generic "invalid file" message.</p>
+  </section>
+
+  <section>
+    <h2>What it checks</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Sample sheets</h3>
+        <p>Missing required columns, duplicate or illegal sample IDs, reserved names, missing FASTQ paths, index length and Hamming distance, unnamed Excel columns, constant design columns.</p>
+      </div>
+      <div class="card">
+        <h3>FASTQ</h3>
+        <p>Truncated records, sequence/quality length mismatch, @ vs + id mismatch, empty files, interleaved reads, mixed Phred encoding, Cell Ranger filename pattern checks, suffix-vs-content mismatch.</p>
+      </div>
+      <div class="card">
+        <h3>GTF / GFF3</h3>
+        <p>Missing transcript rows, missing gene_id/transcript_id, dangling Parent references, invalid coordinates, duplicate IDs, strand conflicts, gene_name collisions.</p>
+      </div>
+      <div class="card">
+        <h3>Cross-file checks</h3>
+        <p>Sample IDs vs FASTQ-derived names, chr-prefix mismatches, mixed contig sets, suspect reference builds.</p>
+      </div>
+      <div class="card">
+        <h3>Gene lists</h3>
+        <p>Excel date mutilation (2-Sep → SEPTIN2), withdrawn symbols, ambiguous aliases, mixed Ensembl IDs / symbols / dates in one column.</p>
+      </div>
+    </div>
+    <p class="text-muted">biofmt does not align reads, run Cell Ranger, run nf-core, or call variants. It checks inputs before you hand them to those tools.</p>
+  </section>
+
+  <section>
+    <h2>Install</h2>
+    <p>For analysts running the CLI:</p>
+    <pre><code>python -m pip install -e ".[gui]"
+python -m biofmt validate FOLDER --sheet SHEET.csv --profile cellranger</code></pre>
+    <p>For lab staff who'd rather use a window, see the <a href="download.html">Windows install guide</a>.</p>
+  </section>
+
+  <section>
+    <h2>GUI vs CLI</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>&nbsp;</th>
+          <th>GUI</th>
+          <th>CLI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Who it's for</td>
+          <td>Wet-lab staff, core-facility techs</td>
+          <td>Analysts, pipeline operators</td>
+        </tr>
+        <tr>
+          <td>How you run it</td>
+          <td><code>python -m biofmt gui</code> — opens a local Streamlit window</td>
+          <td><code>python -m biofmt validate ...</code> and related subcommands</td>
+        </tr>
+        <tr>
+          <td>Data handling</td>
+          <td>Files stay on that computer</td>
+          <td>Files stay on that computer</td>
+        </tr>
+        <tr>
+          <td>Scripting / CI</td>
+          <td>Not designed for this</td>
+          <td>Yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="note">
+    <p>biofmt does not upload your files anywhere. Everything runs on the machine you install it on. See the <a href="privacy.html">privacy page</a> for details.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>&copy; 2026 biofmt</span>
+    <a href="license.html">License</a>
+    <a href="mailto:mankataliachinmaye@gmail.com">mankataliachinmaye@gmail.com</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy — biofmt</title>
+<meta name="description" content="biofmt does not accept sequencing files on this website. The tool runs locally on your machine.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">bio<span>fmt</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="site-nav" id="siteNav">
+      <a href="index.html">Home</a>
+      <a href="download.html">Download</a>
+      <a href="docs.html">Docs</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="license.html">License</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <h1>Privacy</h1>
+
+  <section>
+    <h2>This website does not accept sequencing files</h2>
+    <p>There is no upload feature anywhere on this site. You cannot send a FASTQ file, sample sheet, GTF/GFF3 file, or gene list to us through this website or through the biofmt tool itself. This site is documentation and download links only — it has no backend to receive files.</p>
+  </section>
+
+  <section>
+    <h2>The tool runs locally</h2>
+    <p>biofmt — whether you use the CLI or the local GUI (<code>python -m biofmt gui</code>) — runs entirely on the computer where you installed it. Your sample sheets, FASTQ files, GTF/GFF3 files, and gene lists are read from disk and never transmitted anywhere by the tool. There is no telemetry, no phone-home behavior, and no cloud component.</p>
+  </section>
+
+  <section>
+    <h2>If you email us for support</h2>
+    <p>If you contact <a href="mailto:mankataliachinmaye@gmail.com">mankataliachinmaye@gmail.com</a> for help and want to attach a sample sheet or file so we can reproduce an issue, please strip identifying information first — sample names, patient or subject identifiers, and anything else that shouldn't leave your institution. A small, de-identified excerpt that reproduces the problem is usually all we need.</p>
+  </section>
+
+  <section>
+    <h2>This site itself</h2>
+    <p>This is a static brochure site. It does not use tracking analytics by default. If that ever changes, this page will be updated to say so.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>&copy; 2026 biofmt</span>
+    <a href="license.html">License</a>
+    <a href="mailto:mankataliachinmaye@gmail.com">mankataliachinmaye@gmail.com</a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
